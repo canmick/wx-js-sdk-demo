@@ -40,12 +40,12 @@
     
     - **实操**
       
-      1. **对本地运行项目进行内网穿透**
+      1. **对本地运行项目进行内网穿透**   
         电脑运行项目，确定运行端口号，如`8080`，以`uTools`内网穿透插件为例，配置好穿透端口号和外网地址，点击右下角连接，成功后就可以通过外网地址访问啦，同时还是支持热更新（工程项目可能会遇到`Invalid Host header`问题，解决方法详见实操4）
       
         ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/utools%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%85%8D%E7%BD%AE.png)
       
-      2. **添加手机端调试窗口**
+      2. **添加手机端调试窗口**   
         完成步骤1就通过外网访问本地项目了，但好像和通过`ip`地址打开没啥区别。。。别急，该`vconsole`登场了，本文`demo`以`vue`项目为例，先`npm`安装一下，在项目里引入并初始化，此时是不是看到页面右小角多了个绿色小按钮，没错，点它就对了。调试界面如下图，功能还是挺齐全的，可以愉快的~~调戏~~调试啦
       
         ```js
@@ -58,7 +58,7 @@
       
         ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/vConsole.png)
     
-      3. **本地`node`服务**
+      3. **本地`node`服务**   
         启动一个本地node服务，作用有两个
       
       1. 用于配置测试公众号时校验`url`是否能正确响应Token验证，详见[文档](https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Access_Overview.html)，下面代码示例
@@ -106,7 +106,7 @@
            };
          ```
     
-      4. **前端请求代理**
+      4. **前端请求代理**   
          内网穿透后，使用外网地址访问页面时，若页面内请求的还是真实服务地址的话会产生跨域问题，而且还不能直接请求本地node服务地址，所以此时需要进行请求代理。
        首先把项目内的请求地址改成穿透地址，然后进行代理转发。`webpack`工程可以通过配置[devServer](https://www.webpackjs.com/configuration/dev-server/#devserver-proxy)实现，其他可以使用`nginx`，本文以`vue cli`工程配置`devServer`为例
       
@@ -142,7 +142,7 @@
     
       ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/cheap-module-eval-source-map.png)
 
- ## 微信js-sdk使用分享
+ ## 微信js-sdk使用分享   
 > 开发微信H5页面时会遇到许多与微信交互的场景，所以熟悉使用`微信js-sdk`能大大~~减少加班时间~~提升开发效率；接下来聊聊日常开发`微信js-sdk`中常遇到的问题，如果没使用过的小伙伴可以先看看[官方文档](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html)
 
  - `invalid signature`签名错误问题
@@ -220,13 +220,13 @@
         });
         ```
         
-    - **分享接口**
+    - **分享接口**   
       首先明确一点，H5页面是无法通过该类接口主动调起微信菜单里的分享菜单的， 降级处理一般就是弹窗提示进行引导分享，但存在封号风险，谨慎使用！
     
       -  `wx.onMenuShareTimeline`、`wx.onMenuShareAppMessage` 可以获取到用户是否点了微信菜单里的分享按钮，但无法判断是否真正分享了出去，比如弹出分享窗口后点击“否”返回页面，也算入`success`回调里。这两接口**即将废弃**，即将到何时是个未知数，所以还是尽量别用
       -  `wx.updateAppMessageShareData`、`wx.updateTimelineShareData` 这两兄弟就是为了取缔上面两兄弟的，砍到了**按钮点击状态**获取功能，这么好的产品经理哪里找...
     
-    - **图像接口**
+    - **图像接口**   
       - `wx.chooseImage`返回的本地照片`localId`，类似于使用`URL.createObjectURL`创建的文件引用，`android`客户端可以直接当 `img`标签的`src`正常使用，但`ios`端不行，得使用`wx.getLocalImageData`转为`base64`格式再进行展示
       - `wx.uploadImage`会将你得图片上传到微信服务器保存3天（大厂财大气粗），并返回对应得服务器ID，有效期内使用`wx.downloadImage`即可获取到该图片得`localId`
     
@@ -234,7 +234,7 @@
 
 ## 调试DEMO
 
-光看不练假把式，为了让小伙伴们更容易理解文中内容，我用`vue cli`整了个`demo`给大家，从`github`下载下来就可以用了，整体项目结构如下图，项目地址[vue-js-sdk-demo]()
+光看不练假把式，为了让小伙伴们更容易理解文中内容，我用`vue cli`整了个`demo`给大家，从`github`下载下来就可以用了，整体项目结构如下图，项目地址[vue-js-sdk-demo](https://github.com/candyman0753/wx-js-sdk-demo)
 
 ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.png)
 
