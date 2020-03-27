@@ -1,0 +1,439 @@
+/* reset */
+html,
+body {
+  background-color: #f8f8f8;
+  font-size: 16px;
+  line-height: 1.4;
+  height: 100%;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+}
+
+div{
+	box-sizing: border-box;
+}
+
+/* 圆角 */
+.radiusMixin(@arguments) {
+  border-radius: @arguments;
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+}
+.radius {
+  .radiusMixin(5px);
+  &-top {
+    .radiusMixin(5px 5px 0 0);
+  }
+  &-bottom {
+    .radiusMixin(0 0 5px 5px);
+  }
+  &-top-lg {
+    .radiusMixin(15px 15px 0 0);
+  }
+  &-bottom-lg {
+    .radiusMixin(0 0 15px 15px);
+  }
+}
+
+/* flex */
+.flex {
+  display: flex;
+
+  &-basis {
+    &-xxs {
+      flex-basis: 10%;
+    }
+    &-xs {
+      flex-basis: 20%;
+    }
+    &-sm {
+      flex-basis: 40%;
+    }
+    &-df {
+      flex-basis: 50%;
+    }
+    &-lg {
+      flex-basis: 60%;
+    }
+    &-xl {
+      flex-basis: 80%;
+    }
+  }
+
+  &-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-wrap {
+    flex-wrap: wrap;
+  }
+  &-sub {
+    flex: 1;
+  }
+  &-twice {
+    flex: 2;
+  }
+  &-treble {
+    flex: 3;
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.justify {
+  &-start {
+    justify-content: flex-start;
+  }
+  &-end {
+    justify-content: flex-end;
+  }
+  &-center {
+    justify-content: center;
+  }
+  &-around {
+    justify-content: space-around;
+  }
+  &-between {
+    justify-content: space-between;
+  }
+}
+
+.align {
+  &-start {
+    align-items: flex-start;
+  }
+  &-end {
+    align-items: flex-end;
+  }
+  &-center {
+    align-items: center;
+  }
+  &-around {
+    align-items: space-around;
+  }
+  &-between {
+    align-items: space-between;
+  }
+  &-stretch {
+    align-items: stretch;
+  }
+}
+
+/* 背景色相关 */
+@red: #e54d42; /*嫣红*/
+@orange: #f37b1d; /*桔橙*/
+@yellow: #fbbd08; /*明黄*/
+@olive: #8dc63f; /*橄榄*/
+@green: #39b54a; /*森绿*/
+@cyan: #1cbbb4; /*天青*/
+@blue: #0081ff; /*海蓝*/
+@purple: #6739b6; /*姹紫*/
+@mauve: #9c26b0; /*木槿*/
+@pink: #e03997; /*桃粉*/
+@brown: #a5673f; /*棕褐*/
+@grey: #8799a3; /*玄灰*/
+@gray: #f0f0f0; /*草灰*/
+@black: #333; /*墨黑*/
+@white: #fff; /*雅白*/
+@666: #666;
+@999: #999;
+@color-list: red, orange, yellow, olive, green, cyan, blue, purple, mauve, pink,
+  brown, grey, gray, black, white, 666, 999;
+
+each(@color-list, {
+	/* 文字颜色 */
+	.text-@{value} {
+		color: @@value;
+	}
+	/* 背景色 */
+	.bg-@{value} {
+		background-color: @@value;
+	}
+	/* 浅色背景 */
+	.bg-@{value}.light {
+		background-color: lighten(@@value,30%);
+	}
+	/* 线条色 */
+	.line-@{value} {
+		color: @@value;
+		&::after{
+			border-color: @@value;;
+		}
+	}
+})
+
+/* margin & padding */
+@base: 5px;
+@xs: @base;
+@sm: @base*2;
+@df: @base*3;
+@lg: @base*4;
+@xl: @base*5;
+.margin {
+	margin: @df;
+	&-0 {
+		margin: 0;
+	}
+	&-xs {
+		margin: @xs;
+	}
+	&-sm {
+		margin: @sm;
+	}
+	&-lg {
+		margin: @lg;
+	}
+	&-xl {
+		margin: @xl;
+	}
+	&-top {
+		margin-top: @df;
+		&-xs {
+			margin-top: @xs;
+		}
+		&-sm {
+			margin-top: @sm;
+		}
+		&-lg {
+			margin-top: @lg;
+		}
+		&-xl {
+			margin-top: @xl;
+		}
+	}
+	&-right {
+		margin-right: @df;
+		&-xs {
+			margin-right: @xs;
+		}
+		&-sm {
+			margin-right: @sm;
+		}
+		&-lg {
+			margin-right: @lg;
+		}
+		&-xl {
+			margin-right: @xl;
+		}
+	}
+	&-bottom {
+		margin-bottom: @df;
+		&-xs {
+			margin-bottom: @xs;
+		}
+		&-sm {
+			margin-bottom: @sm;
+		}
+		&-lg {
+			margin-bottom: @lg;
+		}
+		&-xl {
+			margin-bottom: @xl;
+		}
+	}
+	&-left {
+		margin-left: @df;
+		&-xs {
+			margin-left: @xs;
+		}
+		&-sm {
+			margin-left: @sm;
+		}
+		&-lg {
+			margin-left: @lg;
+		}
+		&-xl {
+			margin-left: @xl;
+		}
+	}
+	&-lr {
+		margin-left: @df;
+		margin-right: @df;
+		&-xs {
+			margin-left: @xs;
+			margin-right: @xs;
+		}
+		&-sm {
+			margin-left: @sm;
+			margin-right: @sm;
+		}
+		&-lg {
+			margin-left: @lg;
+			margin-right: @lg;
+		}
+		&-xl {
+			margin-left: @xl;
+			margin-right: @xl;
+		}
+	}
+	&-tb {
+		margin-top: @df;
+		margin-bottom: @df;
+		&-xs {
+			margin-top: @xs;
+			margin-bottom: @xs;
+		}
+		&-sm {
+			margin-top: @sm;
+			margin-bottom: @sm;
+		}
+		&-lg {
+			margin-top: @lg;
+			margin-bottom: @lg;
+		}
+		&-xl {
+			margin-top: @xl;
+			margin-bottom: @xl;
+		}
+	}
+}
+
+.padding {
+	padding: @df;
+	&-0 {
+		padding: 0;
+	}
+	&-xs {
+		padding: @xs;
+	}
+	&-sm {
+		padding: @sm;
+	}
+	&-lg {
+		padding: @lg;
+	}
+	&-xl {
+		padding: @xl;
+	}
+	&-top {
+		padding-top: @df;
+		&-xs {
+			padding-top: @xs;
+		}
+		&-sm {
+			padding-top: @sm;
+		}
+		&-lg {
+			padding-top: @lg;
+		}
+		&-xl {
+			padding-top: @xl;
+		}
+	}
+	&-right {
+		padding-right: @df;
+		&-xs {
+			padding-right: @xs;
+		}
+		&-sm {
+			padding-right: @sm;
+		}
+		&-lg {
+			padding-right: @lg;
+		}
+		&-xl {
+			padding-right: @xl;
+		}
+	}
+	&-bottom {
+		padding-bottom: @df;
+		&-xs {
+			padding-bottom: @xs;
+		}
+		&-sm {
+			padding-bottom: @sm;
+		}
+		&-lg {
+			padding-bottom: @lg;
+		}
+		&-xl {
+			padding-bottom: @xl;
+		}
+	}
+	&-left {
+		padding-left: @df;
+		&-xs {
+			padding-left: @xs;
+		}
+		&-sm {
+			padding-left: @sm;
+		}
+		&-lg {
+			padding-left: @lg;
+		}
+		&-xl {
+			padding-left: @xl;
+		}
+	}
+	&-lr {
+		padding-left: @df;
+		padding-right: @df;
+		&-xs {
+			padding-left: @xs;
+			padding-right: @xs;
+		}
+		&-sm {
+			padding-left: @sm;
+			padding-right: @sm;
+		}
+		&-lg {
+			padding-left: @lg;
+			padding-right: @lg;
+		}
+		&-xl {
+			padding-left: @xl;
+			padding-right: @xl;
+		}
+	}
+	&-tb {
+		padding-top: @df;
+		padding-bottom: @df;
+		&-xs {
+			padding-top: @xs;
+			padding-bottom: @xs;
+		}
+		&-sm {
+			padding-top: @sm;
+			padding-bottom: @sm;
+		}
+		&-lg {
+			padding-top: @lg;
+			padding-bottom: @lg;
+		}
+		&-xl {
+			padding-top: @xl;
+			padding-bottom: @xl;
+		}
+	}
+}
+
+.g-btn {
+  position: relative;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  min-height: 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  &:not([class*='bg-']) {
+    background-color: #f0f0f0;
+  }
+  &::after {
+    display: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    transform: translate(1px, 1px);
+  }
+}
