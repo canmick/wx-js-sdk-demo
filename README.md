@@ -43,7 +43,7 @@
       1. **对本地运行项目进行内网穿透**
         电脑运行项目，确定运行端口号，如`8080`，以`uTools`内网穿透插件为例，配置好穿透端口号和外网地址，点击右下角连接，成功后就可以通过外网地址访问啦，同时还是支持热更新（工程项目可能会遇到`Invalid Host header`问题，解决方法详见实操4）
       
-        ![](F:\uni-app\wx-js-sdk-demo\static\utools内网穿透配置.png)
+        ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/utools%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E9%85%8D%E7%BD%AE.png)
       
       2. **添加手机端调试窗口**
         完成步骤1就通过外网访问本地项目了，但好像和通过`ip`地址打开没啥区别。。。别急，该`vconsole`登场了，本文`demo`以`vue`项目为例，先`npm`安装一下，在项目里引入并初始化，此时是不是看到页面右小角多了个绿色小按钮，没错，点它就对了。调试界面如下图，功能还是挺齐全的，可以愉快的~~调戏~~调试啦
@@ -56,7 +56,7 @@
          }
         ```
       
-        ![](F:\uni-app\wx-js-sdk-demo\static\vConsole.png)
+        ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/vConsole.png)
     
       3. **本地`node`服务**
         启动一个本地node服务，作用有两个
@@ -138,9 +138,9 @@
     
       > ps: 这里再提醒一点，通过内网穿透地址第一次访问vue项目时可能会出现长时间白屏的情况，这是由于本地调试时开启了 `source map` ，且代码包都没经过压缩，导致代码包体积较大，加载时堵塞了页面渲染，这时可以选择使用`cheap-module-eval-source-map`模式或直接关闭
     
-      ![](F:\uni-app\wx-js-sdk-demo\static\source-map.png)
+      ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/source-map.png)
     
-      ![](F:\uni-app\wx-js-sdk-demo\static\cheap-module-eval-source-map.png)
+      ![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/cheap-module-eval-source-map.png)
 
  ## 微信js-sdk使用分享
 > 开发微信H5页面时会遇到许多与微信交互的场景，所以熟悉使用`微信js-sdk`能大大~~减少加班时间~~提升开发效率；接下来聊聊日常开发`微信js-sdk`中常遇到的问题，如果没使用过的小伙伴可以先看看[官方文档](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html)
@@ -188,11 +188,11 @@
         
           1. 执行`error`回调后也还是会执行`ready`回调，但`error`回调会比`ready`回调优先执行
         
-          <img src="F:\uni-app\wx-js-sdk-demo\static\error.png" style="zoom:80%;" />
+          <img src="https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/error.png" style="zoom:80%;" />
         
           2. 只执行了`ready`回调，但调用接口时还是会出现` the permission value is offline verifying `情况，此时一般都是因为`config`异常了（找不到图了），请重新执行`wx.config`
         
-        <img src="F:\uni-app\wx-js-sdk-demo\static\ready.png" style="zoom: 80%;" />
+        <img src="https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/ready.png" style="zoom: 80%;" />
         
         > 针对以上问题，可以使用Promise封装一下`config`方法
         
@@ -236,7 +236,7 @@
 
 光看不练假把式，为了让小伙伴们更容易理解文中内容，我用`vue cli`整了个`demo`给大家，从`github`下载下来就可以用了，整体项目结构如下图，项目地址[vue-js-sdk-demo]()
 
-![](F:\uni-app\wx-js-sdk-demo\static\项目结构.png)
+![](https://github.com/candyman0753/wx-js-sdk-demo/blob/master/static/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84.png)
 
 ```
 // 初始化项目
