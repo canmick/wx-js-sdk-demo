@@ -148,15 +148,58 @@
         }
         ```
 
+5.  **配置微信测试公众号**  
+    首先找到[测试号入口](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)，使用微信扫一扫就可以注册一个测试号了，大概界面如下
+
+![](https://user-gold-cdn.xitu.io/2020/3/29/17124a6c572b4b1f?w=1340&h=1070&f=png&s=98431)
+配置之前请先启动本地项目，然后使用内网穿透确定好外网地址再进行配置，配置成功后就可以开始调试啦
+
+#### 优化
+
+> 经过实操后，当你满心欢喜通过内网穿透地址第一次访问 vue 项目时，是不是发现加载页面巨慢，长时间白屏，甚至因请求超时而加载失败，纳尼？那咋办？别急，可以从以下几个角度去优化
+
+- **改变`source map`模式**  
+  `vue-cli`在开发环境下生成`source map`的默认模式为 `cheap-module-eval-source-map` ，该模式下为源代码打包，生成包体积较大，导致页面加载时堵塞了页面渲染，所以此时可以选择使用`cheap-source-map`或`eval`模式(构建速度上`eval`模式会快很多)
+
+```js
+//vue.config.js
+module.exports = {
+  configureWebpack: config => {
+    if (process.env.NODE_ENV !== 'production') {
+      config.devtool = 'cheap-source-map'
+    }
+  }
+}
+```
+
+下面是对比图，`vendors`包体积减小了近 60%，加载时间减少了 2.68 秒
+![](https://user-gold-cdn.xitu.io/2020/3/29/1712447ad7ee3f23?w=1720&h=244&f=png&s=66994)
+![](https://user-gold-cdn.xitu.io/2020/3/29/1712447dade0fed9?w=1713&h=283&f=png&s=75489)
+
+- **开启`gzip`压缩**  
+  大型的项目在切换完`source map`模式后，可能会发现`vendors`包的体积还是很大，这时我们可以尝试开启`gzip`压缩（一般服务端配置即可）。  
+  由于`uTools`内网穿透工具默认开启了`gzip`，我们配置不了，所以这里以`vue-cli`开启`gzip`示例，使用`local`地址打开页面对比文件压缩前后的差异
+
+```js
+module.exports = {
+  devServer: {
+    compress: true // 开启gzip压缩
+  }
+}
+```
+
+![](https://user-gold-cdn.xitu.io/2020/3/29/17124722ba78fc0d?w=1275&h=247&f=png&s=29272)
+
+![](https://user-gold-cdn.xitu.io/2020/3/29/17124725b4274ad8?w=1375&h=223&f=png&s=26610)
+
+> em...体积是变小了，加载时间却变长了，是我搞错了什么吗，知道的小伙伴解答一下
+
+- **升级内网穿透带宽**（氪金）  
+  以`natapp`为例（非广告），免费通道的带宽只有 1M，`TCP`连接数限制 5 个，可当你充钱后，带宽可以提升至 100M，直接起飞了是吧。不过一般免费的就够用了，有需求的可以氪一下。
+
 #### 小结
 
 完成以上步骤就可以开始愉快进行调试啦，有其他方案的小伙伴欢迎补充。
-
-> ps: 这里再提醒一点，通过内网穿透地址第一次访问 vue 项目时可能会出现长时间白屏的情况，这是由于开发环境下默认生成`source map`模式为 `cheap-module-eval-source-map` ，该模式下为源代码打包，体积较大，加载时堵塞了页面渲染，这时可以选择使用`cheap-source-map`或`eval`模式(构建速度上`eval`模式会快很多)
-
-![cheap-module-eval-source-map](https://user-gold-cdn.xitu.io/2020/3/29/1712223e50ce1bea?w=1363&h=220&f=png&s=25837)
-
-![eval](https://user-gold-cdn.xitu.io/2020/3/29/171222479bcd2c59?w=1370&h=225&f=png&s=26347)
 
 ## 微信 js-sdk 使用分享
 
@@ -253,6 +296,27 @@ return new Promise((resolve, reject) => {
 
 ![](https://user-gold-cdn.xitu.io/2020/3/28/1711ccab8cce46d5?w=743&h=508&f=png&s=15888)
 
+- 把项目配置放到了根目录，为了方便配置
+
+```js
+;/config/deinx.js
+module.exports = {
+  baseUrl: 'http://example.com', // 启动内网穿透后在此处修改地址
+  appId: 'wxxxxxxxxxxxx43', // 测试公众号appId
+  secret: '7acsssssssssssssss5289', // 测试公众号secret
+  token: 'candyman' // 测试公众号token,自定义
+}
+```
+
+- 使用`natapp`进行内网穿透的话（使用其他内网穿透工具的可以跳过阅读），请在`natapp`官网配置好穿透端口号，然后在`/natapp/config.ini`里填写你的通道号，`Windows`系统直接双击打开`natapp.exe`即可，`Mac`系统请到官网载一个对应客户端替换一下
+
+```ini
+[default]
+authtoken= 填写你的隧道authtoken
+```
+
+- 配置[微信测试公众号](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)时，要先启动本项目，然后配置穿透地址，订阅测试号
+
 ```
 // 初始化项目
 npm install
@@ -266,6 +330,10 @@ npm run dev
 // 单独启动node项目
 npm run service
 ```
+
+- 启动项目后，大概长下面这样子，添加了几个 api 方便测试，demo 里有二次封装 sdk 的示例，可参考
+
+![](https://user-gold-cdn.xitu.io/2020/3/29/171249f4149beed6?w=375&h=669&f=png&s=15336)
 
 ## 后话
 
