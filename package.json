@@ -10,7 +10,7 @@
     "service": "nodemon ./node-service/app.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "jweixin-module": "^1.6.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5"
